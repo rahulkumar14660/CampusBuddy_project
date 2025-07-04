@@ -1,0 +1,1 @@
+CampusBuddy is a full-stack web application built with the MERN stack (MongoDB, Express.js, React.js, Node.js) to streamline and digitize various aspects of campus life. It provides students, faculty, and administrators with a centralized platform for managing academic activities, announcements, schedules, and more.
