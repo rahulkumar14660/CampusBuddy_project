@@ -17,14 +17,13 @@ import NotFound from './landing_page/NotFound';
 import Navbar from './landing_page/Navbar';
 import Footer from './landing_page/Footer';
 
+
 function App() {
-
   return (
-    <>
-      <BrowserRouter>
+    <BrowserRouter>
+      <Navbar />
 
-        <Navbar />
-
+      <div style={{ marginLeft: '240px' }}>
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignUpPage />} />
@@ -40,10 +39,11 @@ function App() {
         </Routes>
 
         <Footer />
-
-      </BrowserRouter>
-    </>
-  )
+      </div>
+    </BrowserRouter>
+  );
 }
+
+
 
 export default App;

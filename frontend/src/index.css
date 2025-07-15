@@ -83,5 +83,36 @@ code {
 }
 
 .text-purple {
-  color: #8e44ad !important; /* or any purple hex you prefer */
+  color: #8e44ad !important;
+}
+
+.auth-bg {
+    /* background: url('/media/images/signupandloginimage.svg') no-repeat center center fixed; */
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.auth-overlay {
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 2rem;
+    border-radius: 1rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}.auth-bg {
+    background: url('/bg-illustration.jpg') no-repeat center center fixed;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-card {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 2.5rem;
+    border-radius: 1.5rem;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }

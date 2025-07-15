@@ -3,101 +3,77 @@ import { Home, Calendar, BookOpen, MessageSquare, Bell, User, UserPlus, LogIn, L
 import { Link } from 'react-router-dom';
 
 function Navbar() {
-    return (
-        <nav className="navbar navbar-expand-lg border-bottom bg-white sticky-top">
-            <div className="container">
+  return (
+    <div
+      className="d-flex flex-column bg-white border-end vh-100 position-fixed"
+      style={{ width: "240px", top: 0, left: 0, zIndex: 1030 }}
+    >
+      {/* Logo */}
+      <div className="text-center py-3 border-bottom">
+        <Link to="/">
+          <img
+            src="/media/images/CampusBuddyLogo.png"
+            alt="CampusBuddy"
+            style={{ height: "55px" }}
+          />
+        </Link>
+      </div>
 
-                {/* Logo on the left */}
-                <Link className="navbar-brand text-primary fw-bold" to="/">
-                    {/* CampusBuddy */}
-                    <img src="/media/images/CampusBuddyLogo.png" style={{height:"55px"}} />
-                </Link>
+      {/* Navigation Links */}
+      <nav className="nav flex-column px-3 mt-3">
+        <Link to="/signup" className="nav-link d-flex align-items-center text-dark">
+          <UserPlus size={18} className="me-2" /> Sign Up
+        </Link>
 
-                {/* Toggle button for mobile view */}
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navbarNav"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+        <Link to="/login" className="nav-link d-flex align-items-center text-dark">
+          <LogIn size={18} className="me-2" /> Login
+        </Link>
 
-                {/* Navbar items */}
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
+        <Link to="/" className="nav-link d-flex align-items-center text-dark">
+          <Home size={18} className="me-2" /> HomePage
+        </Link>
 
-                        <li className="nav-item">
-                            <Link to="/signup" className="nav-link">
-                                <UserPlus size={18} className="me-1" />
-                                Sign Up
-                            </Link>
-                        </li>
+        <Link to="/dashboard" className="nav-link d-flex align-items-center text-dark">
+          <LayoutDashboard size={18} className="me-2" /> Dashboard
+        </Link>
 
-                        <li className="nav-item">
-                            <Link to="/login" className="nav-link">
-                                <LogIn size={18} className="me-1" />
-                                Login
-                            </Link>
-                        </li>
+        <Link to="/events" className="nav-link d-flex align-items-center text-dark">
+          <Calendar size={18} className="me-2" /> Events
+        </Link>
 
-                        <li className="nav-item">
-                            <Link to="/" className="nav-link">
-                                <Home  size={18} className="me-1" />
-                                HomePage
-                            </Link>
-                        </li>
+        <Link to="/notes" className="nav-link d-flex align-items-center text-dark">
+          <BookOpen size={18} className="me-2" /> Notes
+        </Link>
 
-                        <li className="nav-item">
-                            <Link to="/dashboard" className="nav-link">
-                                <LayoutDashboard  size={18} className="me-1" />
-                                Dashboard
-                            </Link>
-                        </li>
+        <Link to="/forum" className="nav-link d-flex align-items-center text-dark">
+          <MessageSquare size={18} className="me-2" /> Forum
+        </Link>
 
-                        <li className="nav-item">
-                            <Link to="/events" className="nav-link">
-                                <Calendar size={18} className="me-1" />
-                                Events
-                            </Link>
-                        </li>
+        <Link to="/notifications" className="nav-link d-flex align-items-center text-dark">
+          <Bell size={18} className="me-2" /> Notifications
+        </Link>
 
-                        <li className="nav-item">
-                            <Link to="/notes" className="nav-link">
-                                <BookOpen size={18} className="me-1" />
-                                Notes
-                            </Link>
-                        </li>
+        <Link to="/profile" className="nav-link d-flex align-items-center text-dark">
+          <User size={18} className="me-2" /> Profile
+        </Link>
+      </nav>
 
-                        <li className="nav-item">
-                            <Link to="/forum" className="nav-link">
-                                <MessageSquare size={18} className="me-1" />
-                                Forum
-                            </Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link to="/notifications" className="nav-link">
-                                <Bell size={18} className="me-1" />
-                                Notifications
-                            </Link>
-                        </li>
-
-                        <li className="nav-item">
-                            <Link to="/profile" className="nav-link">
-                                <User size={18} className="me-1" />
-                                Profile
-                            </Link>
-                        </li>
-
-                    </ul>
-                </div>
+      {/* User Info at Bottom with Photo */}
+        <div className="mt-auto px-3 py-3 border-top d-flex align-items-center">
+            <img
+                src="media/images/your-photo.jpg"
+                alt="User"
+                className="rounded-circle me-2"
+                style={{ width: "40px", height: "40px", objectFit: "cover" }}
+            />
+            <div>
+                <strong className="d-block">Rahul Kumar Tiwari</strong>
+                <small className="text-muted">4th Year • CSE</small>
             </div>
-        </nav>
-    );
+      </div>
+
+    </div>
+  );
 }
 
 export default Navbar;
