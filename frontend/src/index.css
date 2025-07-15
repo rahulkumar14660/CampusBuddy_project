@@ -81,3 +81,7 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
   monospace;
 }
+
+.text-purple {
+  color: #8e44ad !important; /* or any purple hex you prefer */
+}

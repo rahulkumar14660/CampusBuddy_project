@@ -4,76 +4,85 @@ import { Link } from 'react-router-dom';
 
 function Navbar() {
     return (
-        <nav className="navbar navbar-expand-lg border-bottom" style={{ backgroundColor: "#FFF" }}>
-            <div className="container p-2">
+        <nav className="navbar navbar-expand-lg border-bottom bg-white sticky-top">
+            <div className="container">
 
                 {/* Logo on the left */}
-                <Link className="navbar-brand" to="/">
-                    <h3 className="text-primary" style={{textAlign:"left"}}>CampusBuddy</h3>
+                <Link className="navbar-brand text-primary fw-bold" to="/">
+                    {/* CampusBuddy */}
+                    <img src="/public/media/images/CampusBuddyLogo.png" style={{height:"55px"}} />
                 </Link>
 
-                {/* Toggler for mobile view */}
+                {/* Toggle button for mobile view */}
                 <button
                     className="navbar-toggler"
                     type="button"
                     data-bs-toggle="collapse"
-                    data-bs-target="#navbarSupportedContent"
-                    aria-controls="navbarSupportedContent"
+                    data-bs-target="#navbarNav"
+                    aria-controls="navbarNav"
                     aria-expanded="false"
                     aria-label="Toggle navigation"
                 >
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-                {/* Navigation Links on the right */}
-                <div className="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0" >
+                {/* Navbar items */}
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <ul className="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                        <li>
-                            <Link to="/signup" className="flex items-center space-x-2 p-2 rounded font-medium hover:bg-indigo-200 text-black" style={{textDecoration:"none"}}>
-                                <UserPlus size={20} /> <span>Sign Up</span>
+                        <li className="nav-item">
+                            <Link to="/signup" className="nav-link">
+                                <UserPlus size={18} className="me-1" />
+                                Sign Up
                             </Link>
                         </li>
 
-                        <li>
-                            <Link to="/login" className="flex items-center space-x-2 p-2 rounded font-medium hover:bg-indigo-200 text-black" style={{textDecoration:"none"}}>
-                                <LogIn size={20} /> <span>Login</span>
+                        <li className="nav-item">
+                            <Link to="/login" className="nav-link">
+                                <LogIn size={18} className="me-1" />
+                                Login
                             </Link>
                         </li>
 
-                        <li>
-                            <Link to="/dashboard" className="flex items-center space-x-2 p-2 rounded font-medium hover:bg-indigo-200 text-black" style={{textDecoration:"none"}}>
-                                <Home size={20} /> <span>Dashboard</span>
+                        <li className="nav-item">
+                            <Link to="/dashboard" className="nav-link">
+                                <Home size={18} className="me-1" />
+                                Dashboard
                             </Link>
                         </li>
 
-                        <li>
-                        <Link to="/events" className="flex items-center space-x-2 p-2 rounded font-medium hover:bg-indigo-200 text-black" style={{textDecoration:"none"}}>
-                                <Calendar size={20} /> <span>Events</span>
+                        <li className="nav-item">
+                            <Link to="/events" className="nav-link">
+                                <Calendar size={18} className="me-1" />
+                                Events
                             </Link>
                         </li>
 
-                        <li>
-                            <Link to="/notes" className="flex items-center space-x-2 p-2 rounded font-medium hover:bg-indigo-200 text-black" style={{textDecoration:"none"}}>
-                                <BookOpen size={20} /> <span>Notes</span>
+                        <li className="nav-item">
+                            <Link to="/notes" className="nav-link">
+                                <BookOpen size={18} className="me-1" />
+                                Notes
                             </Link>
                         </li>
 
-                        <li>
-                            <Link to="/forum" className="flex items-center space-x-2 p-2 rounded font-medium hover:bg-indigo-200 text-black" style={{textDecoration:"none"}}>
-                                <MessageSquare size={20} /> <span>Forum</span>
+                        <li className="nav-item">
+                            <Link to="/forum" className="nav-link">
+                                <MessageSquare size={18} className="me-1" />
+                                Forum
                             </Link>
                         </li>
 
-                        <li>
-                            <Link to="/notifications" className="flex items-center space-x-2 p-2 rounded font-medium hover:bg-indigo-200 text-black" style={{textDecoration:"none"}}>
-                                <MessageSquare size={20} /> <span>Notifications</span>
+                        <li className="nav-item">
+                            <Link to="/notifications" className="nav-link">
+                                <Bell size={18} className="me-1" />
+                                Notifications
                             </Link>
                         </li>
 
-                        <li>
-                            <Link to="/profile" className="flex items-center space-x-2 p-2 rounded font-medium hover:bg-indigo-200 text-black" style={{textDecoration:"none"}}>
-                                <User size={20} /> <span>Profile</span>
+                        <li className="nav-item">
+                            <Link to="/profile" className="nav-link">
+                                <User size={18} className="me-1" />
+                                Profile
                             </Link>
                         </li>
 
