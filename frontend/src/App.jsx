@@ -11,6 +11,7 @@ import ForumPage from './landing_page/forum/ForumPage';
 import NotesPage from './landing_page/notes/NotesPage';
 import NotificationsPage from './landing_page/notifications/NotificationsPage';
 import ProfilePage from './landing_page/profile/ProfilePage';
+import DoubtPage from './landing_page/doubts/DoubtPage';
 
 import NotFound from './landing_page/NotFound';
 import Navbar from './landing_page/Navbar';
@@ -34,6 +35,7 @@ function App() {
           <Route path="/notes" element={<NotesPage />} />
           <Route path="/notifications" element={<NotificationsPage />} />
           <Route path="/profile" element={<ProfilePage />} />
+          <Route path="/doubts" element={<DoubtPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
 

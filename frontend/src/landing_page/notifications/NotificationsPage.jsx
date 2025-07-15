@@ -1,9 +1,16 @@
-function NotificationsPage() {
+import React from 'react'
+import TopBar from './TopBar';
+import DropDown from './DropDown';
+import Hero from './Hero';
+
+function NotesPage() {
     return (
         <>
-            <h1>Notifications Page</h1>
+            <TopBar />
+            <DropDown />
+            <Hero />
         </>
     );
 }
 
-export default NotificationsPage;
+export default NotesPage;

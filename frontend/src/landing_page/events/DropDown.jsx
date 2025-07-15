@@ -10,7 +10,8 @@ function DropDown() {
                 {/* Left - Dropdowns */}
                 <div className="d-flex flex-wrap gap-3">
                     {/* Category Dropdown */}
-                    <div className="dropdown">
+                    <div className="dropdown d-flex flex-column">
+                        <label className="text-muted small mb-1">Subject</label>
                         <button className="btn btn-light border px-3 py-1 dropdown-toggle" type="button" data-bs-toggle="dropdown">
                             Category
                         </button>
@@ -25,9 +26,10 @@ function DropDown() {
                     </div>
 
                     {/* Academic Year Dropdown */}
-                    <div className="dropdown">
+                    <div className="dropdown d-flex flex-column">
+                        <label className="text-muted small mb-1">Academic Year</label>
                         <button className="btn btn-light border px-3 py-1 dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            Academic Year
+                            All Years
                         </button>
                         <ul className="dropdown-menu">
                             <li><Link className="dropdown-item" to="/events/year/all">All Years</Link></li>
@@ -39,9 +41,10 @@ function DropDown() {
                     </div>
 
                     {/* Department Dropdown */}
-                    <div className="dropdown">
+                    <div className="dropdown d-flex flex-column">
+                        <label className="text-muted small mb-1">Department</label>
                         <button className="btn btn-light border px-3 py-1 dropdown-toggle" type="button" data-bs-toggle="dropdown">
-                            Department
+                            All Departments
                         </button>
                         <ul className="dropdown-menu">
                             <li><Link className="dropdown-item" to="/events/dept/all">All Departments</Link></li>

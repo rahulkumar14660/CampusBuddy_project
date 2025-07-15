@@ -3,7 +3,7 @@ import React from 'react'
 function Hero() {
     return (
         <>
-            <h1>Hero Section in Events</h1>
+            <h1 className='mt-3'>Hero Section in Notifications</h1>
         </>
     );
 }

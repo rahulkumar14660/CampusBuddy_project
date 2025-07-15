@@ -1,9 +1,18 @@
-function NotesPage() {
+import React from 'react'
+import TopBar from './TopBar';
+import DropDown from './DropDown';
+import StatsRow from './StatsRow';
+import Hero from './Hero';
+
+function EventsPage() {
     return (
         <>
-            <h1>Notes Page</h1>
+            <TopBar />
+            <DropDown />
+            <StatsRow />
+            <Hero />
         </>
     );
 }
 
-export default NotesPage;
+export default EventsPage;

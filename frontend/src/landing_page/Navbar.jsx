@@ -1,5 +1,5 @@
 import React from 'react';
-import { Home, Calendar, BookOpen, MessageSquare, Bell, User, UserPlus, LogIn } from 'lucide-react';
+import { Home, Calendar, BookOpen, MessageSquare, Bell, User, UserPlus, LogIn, LayoutDashboard } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 function Navbar() {
@@ -10,7 +10,7 @@ function Navbar() {
                 {/* Logo on the left */}
                 <Link className="navbar-brand text-primary fw-bold" to="/">
                     {/* CampusBuddy */}
-                    <img src="/public/media/images/CampusBuddyLogo.png" style={{height:"55px"}} />
+                    <img src="/media/images/CampusBuddyLogo.png" style={{height:"55px"}} />
                 </Link>
 
                 {/* Toggle button for mobile view */}
@@ -45,8 +45,15 @@ function Navbar() {
                         </li>
 
                         <li className="nav-item">
+                            <Link to="/" className="nav-link">
+                                <Home  size={18} className="me-1" />
+                                HomePage
+                            </Link>
+                        </li>
+
+                        <li className="nav-item">
                             <Link to="/dashboard" className="nav-link">
-                                <Home size={18} className="me-1" />
+                                <LayoutDashboard  size={18} className="me-1" />
                                 Dashboard
                             </Link>
                         </li>

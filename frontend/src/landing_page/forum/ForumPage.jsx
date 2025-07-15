@@ -1,9 +1,18 @@
-function ForunmPage() {
+import React from 'react'
+import TopBar from './TopBar';
+import DropDown from './DropDown';
+import StatsRow from './StatsRow';
+import Hero from './Hero';
+
+function NotesPage() {
     return (
         <>
-            <h1>Forum Page</h1>
+            <TopBar />
+            <DropDown />
+            <StatsRow />
+            <Hero />
         </>
     );
 }
 
-export default ForunmPage;
+export default NotesPage;
