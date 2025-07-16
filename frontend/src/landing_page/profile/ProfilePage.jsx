@@ -1,7 +1,18 @@
+import React from 'react'
+import ProfileNavbar from './ProfileNavbar';
+import ProfileDetails from './ProfileDetails';
+import PrfileData from './ProfileData';
+import Achievements from './Achievements';
+import RecentActivities from './RecentActivities';
+
 function ProfilePage() {
     return (
         <>
-            <h1>Profile Page</h1>
+            <ProfileNavbar />
+            <ProfileDetails />
+            <PrfileData />
+            <Achievements />
+            <RecentActivities />
         </>
     );
 }
