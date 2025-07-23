@@ -1,0 +1,1 @@
+// For sending OTP emails using Nodemailer
