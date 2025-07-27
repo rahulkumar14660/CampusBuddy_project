@@ -1,26 +1,21 @@
-require("dotenv").config();
+// Connecting to DB and Starting the server in server.js
 
-const express = require("express");
 const mongoose = require("mongoose");
-const bodyParser = require("body-parser");
-const cors = require("cors");
-const cookieParser = require("cookie-parser");
+const app = require("./app");
+
 const PORT = process.env.PORT || 3002;
 const uri = process.env.MONGO_URL;
 
-const app = express();
+mongoose.connect(uri)
+  
+  .then(() => {
+    console.log("DB Connected");
 
-app.use(cors({
-  origin: 'http://localhost:5173',  
-  credentials: true               
-}));
-app.use(bodyParser.json());
-app.use(cookieParser());
+    app.listen(PORT, () => {
+      console.log("App started");
+    });
+  })
 
-app.listen(PORT, () => {
-  console.log("App started!");
-  mongoose.connect(uri);
-  console.log("DB started!");
-});
-
-
+  .catch((err) => {
+    console.error("MongoDB connection failed:", err);
+  });
