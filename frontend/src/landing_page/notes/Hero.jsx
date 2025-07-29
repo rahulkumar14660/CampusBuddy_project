@@ -1,145 +1,135 @@
-import React from 'react';
-import { Eye, Calendar, Download, FileText, FileDown } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Eye, Calendar, Download, FileText, FileDown, Trash2, Pencil } from 'lucide-react';
 
 function Hero() {
+    const [notes, setNotes] = useState([]);
+    const [currentUserId, setCurrentUserId] = useState(null);
+    const [userRole, setUserRole] = useState('');
+
+    useEffect(() => {
+        const fetchNotes = async () => {
+            try {
+                const res = await axios.get('http://localhost:5000/api/notes', { withCredentials: true });
+                setNotes(res.data.notes);
+            } catch (err) {
+                console.error("Failed to fetch notes", err);
+            }
+        };
+
+        const fetchProfile = async () => {
+            try {
+                const res = await axios.get('http://localhost:5000/api/protected/profile', { withCredentials: true });
+                setCurrentUserId(res.data.user._id);
+                setUserRole(res.data.user.role);
+            } catch (err) {
+                console.error("Failed to fetch user", err);
+            }
+        };
+
+        fetchNotes();
+        fetchProfile();
+    }, []);
+
+    const handleDelete = async (id) => {
+        if (!window.confirm("Are you sure you want to delete this note?")) return;
+
+        try {
+            await axios.delete(`http://localhost:5000/api/notes/${id}`, { withCredentials: true });
+            setNotes(notes.filter(note => note._id !== id));
+        } catch (err) {
+            console.error("Delete failed", err);
+            alert("Delete failed");
+        }
+    };
+
+    const handleDownload = async (note) => {
+        try {
+            // Open download in new tab
+            window.open(`http://localhost:5000/uploads/${note.pdfUrl}`, '_blank');
+
+            // Increment download count
+            await axios.post(`http://localhost:5000/api/notes/${note._id}/increment-download`, {}, { withCredentials: true });
+
+            // Update local state
+            setNotes(prev =>
+                prev.map(n => (n._id === note._id ? { ...n, downloads: (n.downloads || 0) + 1 } : n))
+            );
+        } catch (err) {
+            console.error("Download error", err);
+        }
+    };
+
     return (
         <div className="container mt-4">
             <div className="row g-4">
-
-                {/* Note Card 1 */}
-                <NoteCard
-                    title="Data Structures and Algorithms Complete Notes"
-                    description="Comprehensive notes covering all major data structures, algorithms, and their time complexities."
-                    year="2nd Year"
-                    branch="Computer Science"
-                    code="CS201"
-                    tags={["algorithms", "data-structures", "coding"]}
-                    uploadedBy="Sarah Chen"
-                    date="1/10/2025"
-                    subject="Data Structures • 4th Semester"
-                    fileName="DSA_Complete_Notes.pdf"
-                    size="12.5 MB"
-                    downloads={156}
-                />
-
-                {/* Note Card 2 */}
-                <NoteCard
-                    title="Advanced Database Management Systems"
-                    description="Advanced concepts in DBMS including normalization, indexing, and query optimization."
-                    year="3rd Year"
-                    branch="Computer Science"
-                    code="CS301"
-                    tags={["database", "sql", "normalization"]}
-                    uploadedBy="Mike Rodriguez"
-                    date="1/8/2025"
-                    subject="Database Systems • 6th Semester"
-                    fileName="Advanced_DBMS.pdf"
-                    size="13.2 MB"
-                    downloads={89}
-                />
-
-                {/* Note Card 3 */}
-                <NoteCard
-                    title="Linear Algebra Quick Reference"
-                    description="Essential formulas and concepts for linear algebra including matrices, vectors, and eigenvalues."
-                    year="1st Year"
-                    branch="Computer Science"
-                    code="MA101"
-                    tags={["mathematics", "linear-algebra", "formulas"]}
-                    uploadedBy="Emily Watson"
-                    date="1/5/2025"
-                    subject="Mathematics • 2nd Semester"
-                    fileName="Linear_Algebra_Reference.pdf"
-                    size="5.8 MB"
-                    downloads={203}
-                />
-
-                {/* Note Card 4 */}
-                <NoteCard
-                    title="Digital Signal Processing Fundamentals"
-                    description="Core concepts of DSP including Fourier transforms, filters, and signal analysis."
-                    year="3rd Year"
-                    branch="Electronics & Communication"
-                    code="EC301"
-                    tags={["dsp", "signals", "fourier"]}
-                    uploadedBy="Raj Patel"
-                    date="1/12/2025"
-                    subject="Signal Processing • 5th Semester"
-                    fileName="DSP_Fundamentals.pdf"
-                    size="10.7 MB"
-                    downloads={61}
-                />
-
+                {notes.map(note => (
+                    <NoteCard
+                        key={note._id}
+                        note={note}
+                        isOwner={note.uploadedBy._id === currentUserId}
+                        isAdmin={userRole === 'admin'}
+                        onDelete={() => handleDelete(note._id)}
+                        onDownload={() => handleDownload(note)}
+                    />
+                ))}
             </div>
         </div>
     );
 }
 
-function NoteCard({
-    title, description, year, branch, code, tags,
-    uploadedBy, date, subject, fileName, size, downloads
-}) {
+function NoteCard({ note, isOwner, isAdmin, onDelete, onDownload }) {
     return (
         <div className="col-12 col-md-6">
             <div className="border rounded-4 p-3 h-100 shadow-sm position-relative bg-white">
-                
-                {/* Top-right file size */}
                 <div className="position-absolute top-0 end-0 p-3 text-muted small d-flex align-items-center">
                     <FileDown size={14} className="me-1" />
-                    {size}
+                    {note.pdfUrl?.split('.').pop().toUpperCase() || 'File'}
                 </div>
 
-                <div className="w-100">
-                    <h5 className="fw-bold mb-1">{title}</h5>
-                    <p className="text-muted mb-2">{description}</p>
+                <h5 className="fw-bold mb-1">{note.name}</h5>
+                <p className="text-muted mb-2">{note.content}</p>
 
-                    {/* Tags */}
-                    <div className="mb-2">
-                        <span className="badge bg-light text-primary me-2">👁 {year}</span>
-                        <span className="badge bg-light text-success me-2">{branch}</span>
-                        <span className="badge bg-light text-secondary">{code}</span>
+                <div className="mb-2">
+                    <span className="badge bg-light text-primary me-2">{note.year}</span>
+                    <span className="badge bg-light text-success me-2">{note.department}</span>
+                    <span className="badge bg-light text-secondary">{note.subject}</span>
+                </div>
+
+                <div className="text-muted small mb-1">
+                    <Eye size={14} className="me-1" />
+                    Uploaded by <strong>{note.uploadedBy.name}</strong>
+                </div>
+
+                <div className="fw-medium mb-2">{note.subject}</div>
+
+                <hr className="my-3" />
+
+                <div className="d-flex justify-content-between align-items-center text-muted small">
+                    <div className="d-flex align-items-center">
+                        <FileText size={14} className="me-1" />
+                        {note.pdfUrl}
                     </div>
-
-                    <div className="mb-2">
-                        {tags.map((tag, i) => (
-                            <span key={i} className="badge bg-primary-subtle text-primary me-2">{tag}</span>
-                        ))}
+                    <div className="d-flex align-items-center">
+                        <Download size={14} className="me-1" />
+                        {note.downloads || 0} downloads
                     </div>
+                </div>
 
-                    {/* Uploaded info */}
-                    <div className="text-muted small mb-1">
-                        <Eye size={14} className="me-1" />
-                        Uploaded by <strong>{uploadedBy}</strong>
-                    </div>
-                    <div className="text-muted small mb-2">
-                        <Calendar size={14} className="me-1" />
-                        {date}
-                    </div>
-
-                    <div className="fw-medium mb-2">{subject}</div>
-
-                    {/* Horizontal line */}
-                    <hr className="my-3" />
-
-                    {/* File name and download count */}
-                    <div className="d-flex justify-content-between align-items-center text-muted small">
-                        <div className="d-flex align-items-center">
-                            <FileText size={14} className="me-1" />
-                            {fileName}
-                        </div>
-                        <div className="d-flex align-items-center">
-                            <Download size={14} className="me-1" />
-                            {downloads} downloads
-                        </div>
-                    </div>
-
-                    {/* Download button */}
-                    <div className="text-end mt-2">
-                        <button className="btn btn-primary btn-sm">
-                            <Download size={16} className="me-1" />
-                            Download
-                        </button>
-                    </div>
+                <div className="text-end mt-2 d-flex gap-2 justify-content-end">
+                    <button className="btn btn-sm btn-primary" onClick={onDownload}>
+                        <Download size={16} className="me-1" /> Download
+                    </button>
+                    {(isOwner || isAdmin) && (
+                        <>
+                            <button className="btn btn-sm btn-outline-secondary">
+                                <Pencil size={14} /> Edit
+                            </button>
+                            <button className="btn btn-sm btn-outline-danger" onClick={onDelete}>
+                                <Trash2 size={14} /> Delete
+                            </button>
+                        </>
+                    )}
                 </div>
             </div>
         </div>

@@ -7,4 +7,4 @@ const NotificationSchema = new Schema({
     isRead : { type: Boolean, default: false },
 }, { timestamps: true });
 
-module.exports = NotificationSchema;
+module.exports = { NotificationSchema };
