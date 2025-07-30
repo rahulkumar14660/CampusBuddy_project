@@ -3,23 +3,27 @@ const router = express.Router();
 
 const authMiddleware = require("../middleware/authMiddleware");
 const upload = require("../middleware/upload");
-const { uploadNote, getNotes, deleteNote, downloadNote, incrementDownload } = require("../controllers/noteController");
+const {
+  uploadNote,
+  getNotes,
+  deleteNote,
+  downloadNote,
+  incrementDownload
+} = require("../controllers/noteController");
 
-router.use(authMiddleware);
-
-// Upload a note
-router.post("/upload", upload.single("file"), uploadNote);
-
-// Get notes with optional filters
+// Public route — Get notes with optional filters (used in Hero & StatsRow)
 router.get("/", getNotes);
 
-// Delete a note
-router.delete("/:id", deleteNote);
+// Auth required to upload a note
+router.post("/upload", authMiddleware, upload.single("file"), uploadNote);
 
-// Download a note and increment download count
-router.get("/download/:id", downloadNote);
+// Auth required to delete a note
+router.delete("/:id", authMiddleware, deleteNote);
 
-// Increment only the download count (used in frontend)
-router.post("/:id/increment-download", incrementDownload);
+// Auth required to download a note
+router.get("/download/:id", authMiddleware, downloadNote);
+
+// Auth required to increment download count
+router.post("/:id/increment-download", authMiddleware, incrementDownload);
 
 module.exports = router;

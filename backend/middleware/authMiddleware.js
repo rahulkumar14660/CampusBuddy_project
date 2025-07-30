@@ -1,25 +1,28 @@
-// to protect private routes
-
 const jwt = require("jsonwebtoken");
+const { UserModel } = require("../models/UserModel");
 
-const authMiddleware = (req, res, next) => {
-    const authHeader = req.headers.authorization;
+const authMiddleware = async (req, res, next) => {
+  try {
+    // Get token from Authorization header or cookies
+    const token = req.headers.authorization?.split(" ")[1] || req.cookies.token;
 
-    if(!authHeader || !authHeader.startsWith("Bearer")) {
-        return res.status(401).json({ message : "Unauthorized: No token provided" });
+    if (!token) {
+      return res.status(401).json({ message: "No token provided. Access denied." });
     }
 
-    const token = authHeader.split(" ")[1];
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await UserModel.findById(decoded.id).select("-password");
 
-    try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET);
-        req.user = decoded;             // user info (id, role) is now accessible in protected routes
-        next();
+    if (!user) {
+      return res.status(401).json({ message: "Invalid token. User not found." });
     }
-    catch(err) {
-        console.error("Token verification error: ", err);
-        return res.status(401).json({ message: "Unauthorized: Invalid token" });
-    }
+
+    req.user = user;
+    next();
+  } catch (err) {
+    console.error("Auth error:", err);
+    res.status(401).json({ message: "Unauthorized" });
+  }
 };
 
 module.exports = authMiddleware;

@@ -9,9 +9,6 @@ function TopBar() {
                     <Notebook size={36} className="me-0 me-sm-3 mb-2 mb-sm-0 text-purple" />
                     <div>
                         <h2 className="mb-1 fw-bold">Notes for Your Year and Department</h2>
-                        <p className="text-secondary mb-0">
-                            1 notes available for 3rd year Computer Science students
-                        </p>
                     </div>
                 </div>
             </div>

@@ -5,7 +5,7 @@ const { register, verifyOtp, login, resendOtp } = require("../controllers/authCo
 
 router.post("/register", register);             // sends otp
 router.post("/verify-otp", verifyOtp);          // creates user
-router.post("/login",login);
+router.post("/login", login);
 router.post("/resend-otp", resendOtp);
 
 module.exports = router;

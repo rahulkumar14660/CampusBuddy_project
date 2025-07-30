@@ -2,8 +2,10 @@ import React from 'react'
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
+import AuthContext from './landing_page/context/AuthContext'
 import HomePage from './landing_page/home/HomePage'
 import SignUpPage from './landing_page/signup/SignUpPage';
+import OtpVerificationPage from './landing_page/signup/OtpVerificationPage';
 import LoginPage from './landing_page/login/LoginPage';
 import DashboardPage from './landing_page/dashboard/DashboardPage';
 import EventsPage from './landing_page/events/EventsPage';
@@ -27,6 +29,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/verify-otp" element={<OtpVerificationPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/events" element={<EventsPage />} />

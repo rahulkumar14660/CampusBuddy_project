@@ -1,44 +1,49 @@
-import React from 'react';
+import React, { useState, useContext } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 
 function LoginPage() {
-    return (
-        <div className="auth-bg">
+  const [form, setForm] = useState({ email: '', password: '' });
+  const [error, setError] = useState('');
+  const navigate = useNavigate();
+  const { login } = useContext(AuthContext);
 
-            <div className="container">
-                <div className="row justify-content-center">
+  const handleChange = (e) => {
+    setForm({ ...form, [e.target.name]: e.target.value });
+  };
 
-                    <div className="col-md-6 auth-card">
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError('');
+    try {
+      const res = await axios.post('http://localhost:5000/api/auth/login', form);
+      login(res.data.token);
+      navigate('/dashboard');
+    } catch (err) {
+      setError(err.response?.data?.message || 'Login failed');
+    }
+  };
 
-                        <div className="text-center mb-4">
-                            <h2 className="fw-bold">Login to CampusBuddy</h2>
-                            <p className="text-muted">Welcome back, student!</p>
-                        </div>
+  return (
+    <div className="auth-bg">
+      <div className="container">
+        <div className="row justify-content-center">
+          <div className="col-md-6 auth-card">
+            <h2 className="text-center mb-4">Login to CampusBuddy</h2>
+            {error && <div className="alert alert-danger">{error}</div>}
 
-                        <form action="/login" method="POST" className="needs-validation" noValidate>
+            <form onSubmit={handleSubmit}>
+              <input name="email" className="form-control mb-3" placeholder="Email" onChange={handleChange} required />
+              <input name="password" type="password" className="form-control mb-4" placeholder="Password" onChange={handleChange} required />
 
-                            <div className="mb-3">
-                                <label htmlFor="username" className="form-label">Username</label>
-                                <input name="username" id="username" type="text" className="form-control" required />
-                            </div>
-
-                            <div className="mb-4">
-                                <label htmlFor="password" className="form-label">Password</label>
-                                <input name="password" id="password" type="password" className="form-control" required />
-                            </div>
-
-                            <div className="d-grid">
-                                <button type="submit" className="btn btn-success">Login</button>
-                            </div>
-                            
-                        </form>
-                    </div>
-
-                </div>
-
-            </div>
-
+              <button type="submit" className="btn btn-success w-100">Login</button>
+            </form>
+          </div>
         </div>
-    );
+      </div>
+    </div>
+  );
 }
 
 export default LoginPage;
