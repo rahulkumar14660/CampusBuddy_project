@@ -1,6 +1,3 @@
-// Express Setup in app.js
-
-
 require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
@@ -11,6 +8,8 @@ const cookieParser = require("cookie-parser");
 const authRoutes = require("./routes/authRoutes");
 const protectedRoutes = require("./routes/protectedRoutes");
 const noteRoutes = require("./routes/noteRoutes");
+const eventRoutes = require("./routes/eventRoutes");
+const forumRoutes = require("./routes/forumRoutes");
 
 const app = express();
 
@@ -30,5 +29,7 @@ app.use("/uploads", express.static("uploads"));
 app.use("/api/auth", authRoutes);
 app.use("/api/protected", protectedRoutes);                   // protects all private routes
 app.use("/api/notes", noteRoutes);
+app.use("/api/events", eventRoutes);
+app.use("/api/forum", forumRoutes);
 
 module.exports = app;

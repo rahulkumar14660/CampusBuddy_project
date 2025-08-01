@@ -1,5 +1,3 @@
-// Connecting to DB and Starting the server in server.js
-
 const mongoose = require("mongoose");
 const app = require("./app");
 
