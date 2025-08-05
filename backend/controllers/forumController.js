@@ -14,15 +14,20 @@ const getAllForumPosts = async (req, res) => {
     console.log("Matching users:", users);
 
     const userIds = users.map((u) => u._id);
+    
+    // Handle empty userIds
+    if (userIds.length === 0) {
+      return res.json({ posts: [] });
+    }
+
     const posts = await ForumPostModel.find({ postedBy: { $in: userIds } })
       .populate("postedBy", "name")
       .populate("comments.user", "name")
       .sort({ createdAt: -1 });
 
-    console.log("Fetched posts:", posts.length);
     res.json({ posts });
   } catch (err) {
-    console.error("Forum GET error:", err); // <- add this
+    console.error("Forum GET error:", err);
     res.status(500).json({ message: "Error fetching forum posts", error: err });
   }
 };

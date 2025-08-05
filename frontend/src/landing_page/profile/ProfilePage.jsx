@@ -8,11 +8,7 @@ function ProfilePage() {
   const [user, setUser] = useState(null);
   const [editing, setEditing] = useState(false);
 
-  const token = localStorage.getItem("token");
-  const config = {
-    headers: { Authorization: `Bearer ${token}` },
-    withCredentials: true,
-  };
+  const config = { withCredentials: true };
 
   useEffect(() => {
     fetchProfile();

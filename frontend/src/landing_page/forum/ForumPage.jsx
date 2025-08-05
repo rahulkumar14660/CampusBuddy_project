@@ -33,9 +33,20 @@ const fetchPosts = async () => {
 
 
   const fetchUser = async () => {
-    const res = await axios.get('http://localhost:5000/api/protected/profile', config);
+  try {
+    const res = await axios.get("http://localhost:5000/api/protected/profile", config);
     setUser(res.data.user || {});
-  };
+  } catch (err) {
+    console.error("Fetch user error:", err.response?.data || err.message);
+    if (
+      err.response?.data?.message?.includes("expired") ||
+      err.response?.data?.message?.includes("malformed")
+    ) {
+      localStorage.removeItem("token");
+      window.location.href = "/login"; // or navigate to login
+    }
+  }
+};
 
   const handleDelete = async (id) => {
     if (!window.confirm('Delete this post?')) return;
