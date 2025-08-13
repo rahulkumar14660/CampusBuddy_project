@@ -28,6 +28,7 @@ function Navbar() {
             <Link to="/signup" className="nav-link d-flex align-items-center text-dark">
               <UserPlus size={18} className="me-2" /> Sign Up
             </Link>
+            
             <Link to="/login" className="nav-link d-flex align-items-center text-dark">
               <LogIn size={18} className="me-2" /> Login
             </Link>
@@ -71,16 +72,19 @@ function Navbar() {
 
       {/* Footer User Info */}
       <div className="mt-auto px-3 py-3 border-top d-flex align-items-center">
+
         <img
           src="/media/images/your-photo.jpg"
           alt="User"
           className="rounded-circle me-2"
           style={{ width: "40px", height: "40px", objectFit: "cover" }}
         />
+
         <div>
           <strong className="d-block">Rahul Kumar Tiwari</strong>
           <small className="text-muted">4th Year • CSE</small>
         </div>
+
       </div>
     </div>
   );
