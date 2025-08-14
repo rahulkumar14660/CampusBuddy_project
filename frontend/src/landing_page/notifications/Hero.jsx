@@ -1,38 +1,58 @@
-import React from 'react';
-import NotificationCard from './NotificationCard';
+import React, { useEffect, useState } from "react";
+import NotificationCard from "./NotificationCard";
+import axios from "axios";
 
-const dummyNotifications = [
-    {
-        id: 1,
-        type: 'Event',
-        message: 'New Hackathon announced: TechBlaze 2025!',
-        date: 'July 15, 2025',
-        isRead: false
-    },
-    {
-        id: 2,
-        type: 'Note',
-        message: 'Operating Systems notes for Unit 3 uploaded.',
-        date: 'July 14, 2025',
-        isRead: true
-    },
-    {
-        id: 3,
-        type: 'Forum',
-        message: 'Your doubt on DNS has a new answer!',
-        date: 'July 13, 2025',
-        isRead: false
-    }
-];
+function Hero({ filterType, showPersonal }) {
+  const [notifications, setNotifications] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-function Hero() {
-    return (
-        <div className="mx-3 mx-md-5">
-            {dummyNotifications.map((item) => (
-                <NotificationCard key={item.id} data={item} />
-            ))}
-        </div>
-    );
+  // Fetch notifications from backend
+  useEffect(() => {
+    const fetchNotifications = async () => {
+      try {
+        setLoading(true);
+        const token = localStorage.getItem("token"); // assuming token is stored in localStorage
+
+        // Decide endpoint based on showPersonal toggle
+        const endpoint = showPersonal
+          ? "/api/notifications/my"
+          : "/api/notifications";
+
+        const { data } = await axios.get(endpoint, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+
+        // Apply frontend filtering if filterType is set
+        const filtered = filterType
+          ? data.filter((n) => n.type === filterType)
+          : data;
+
+        setNotifications(filtered);
+      } catch (error) {
+        console.error("Error fetching notifications", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchNotifications();
+  }, [filterType, showPersonal]);
+
+  if (loading) {
+    return <p className="text-center my-5">Loading notifications...</p>;
+  }
+
+  if (notifications.length === 0) {
+    return <p className="text-center my-5">No notifications found.</p>;
+  }
+
+  return (
+    <div className="container mt-4">
+      {notifications.map((notification) => (
+        <NotificationCard key={notification._id} notification={notification} />
+      ))}
+    </div>
+  );
 }
 
 export default Hero;

@@ -10,6 +10,7 @@ const protectedRoutes = require("./routes/protectedRoutes");
 const noteRoutes = require("./routes/noteRoutes");
 const eventRoutes = require("./routes/eventRoutes");
 const forumRoutes = require("./routes/forumRoutes");
+const notificationRoutes = require("./routes/notificationRoutes");
 
 const app = express();
 
@@ -31,5 +32,6 @@ app.use("/api/protected", protectedRoutes);                   // protects all pr
 app.use("/api/notes", noteRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/forum", forumRoutes);
+app.use("/api/notifications", notificationRoutes);
 
 module.exports = app;
